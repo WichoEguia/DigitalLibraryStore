@@ -53,6 +53,10 @@ public class Book {
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Loan> loans;
 
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
+
     public Book(String isbn, String title, String description, String imageUrl, Format format,
                 LocalDate publishDate, Integer pagesNo, double popularity) {
         this.isbn = isbn;
