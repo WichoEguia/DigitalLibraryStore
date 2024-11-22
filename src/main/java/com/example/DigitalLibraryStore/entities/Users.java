@@ -10,19 +10,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "users")
 @NoArgsConstructor
 @Setter
 @Getter
 @ToString
-public class Usuario {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     @NotBlank
-    private String nombre;
+    private String name;
 
     @Column(nullable = false)
     @Email
@@ -35,25 +35,27 @@ public class Usuario {
     private boolean enabled;
 
     @Column(updatable = false)
-    private LocalDateTime fechaCreacion;
+    private LocalDateTime creationDate;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Prestamo> prestamos;
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Loans> loans;
 
-    public Usuario(String nombre, String email, String password, boolean enabled) {
-        this.nombre = nombre;
+    public Users(String name, String email, String password, boolean enabled) {
+        this.name = name;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
+        this.creationDate = LocalDateTime.now();
+        this.loans = new HashSet<>();
     }
 
-    public Usuario(Long id, String nombre, String email, String password, boolean enabled) {
+    public Users(Long id, String name, String email, String password, boolean enabled) {
         this.id = id;
-        this.nombre = nombre;
+        this.name = name;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
-        this.fechaCreacion = LocalDateTime.now();
-        this.prestamos = new HashSet<>();
+        this.creationDate = LocalDateTime.now();
+        this.loans = new HashSet<>();
     }
 }

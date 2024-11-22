@@ -10,13 +10,13 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name = "libro")
+@Table(name = "books")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 @ToString
-public class Libro {
+public class Books {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,41 +25,41 @@ public class Libro {
     private String isbn;
 
     @Column(nullable = false)
-    private String titulo;
+    private String title;
 
     @Column(nullable = false)
-    private String descripcion;
+    private String description;
 
     @Column
-    private String portadaUrl;
+    private String imageUrl;
 
     @Column
-    private String formato;
+    private String format;
 
     @Column(nullable = false)
-    private LocalDate fechaPublicacion;
+    private LocalDate publishDate;
 
     @Column
     @MinPages(value = 100)
-    private Integer numeroPaginas;
+    private Integer pagesNo;
 
     @Column(nullable = false)
     @Min(value = 0, message = "La popularidad no puede ser menor que 0.")
     @Max(value = 10, message = "La popularidad no puede ser mayor que 100.")
-    private double popularidad;
+    private double popularity;
 
-    @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Prestamo> prestamos;
+    @OneToMany(mappedBy = "books", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Loans> loans;
 
-    public Libro(String isbn, String titulo, String descripcion, String portadaUrl, String formato,
-                 LocalDate fechaPublicacion, Integer numeroPaginas, double popularidad) {
+    public Books(String isbn, String title, String description, String imageUrl, String format,
+                 LocalDate publishDate, Integer pagesNo, double popularity) {
         this.isbn = isbn;
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.portadaUrl = portadaUrl;
-        this.formato = formato;
-        this.fechaPublicacion = fechaPublicacion;
-        this.numeroPaginas = numeroPaginas;
-        this.popularidad = popularidad;
+        this.title = title;
+        this.description = description;
+        this.imageUrl = imageUrl;
+        this.format = format;
+        this.publishDate = publishDate;
+        this.pagesNo = pagesNo;
+        this.popularity = popularity;
     }
 }

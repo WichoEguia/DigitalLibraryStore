@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 public @interface MinPages {
     int value() default 100;
 
-    String message() default "El libro debe tener al menos {value} paginas.";
+    String message() default "El book debe tener al menos {value} paginas.";
 
     Class<?>[] groups() default {};
 
