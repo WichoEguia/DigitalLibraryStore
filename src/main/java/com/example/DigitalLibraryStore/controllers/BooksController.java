@@ -13,6 +13,8 @@ import java.util.Optional;
 /**
  * REST controller for managing books in the digital library system.
  */
+@RestController
+@RequestMapping("/api/v1/books")
 public class BooksController {
 
     private final BookServiceImpl bookService;

@@ -19,7 +19,7 @@ class UsersIntegrationTest {
 
     @Test
     public void testRegisterUser() {
-        Users users = new Users(1L, "John Doe", "john.doe@example.com", "secure123", true);
+        Users users = new Users("John Doe", "john.doe@example.com", "secure123", true);
         HttpEntity<Users> request = new HttpEntity<>(users);
         ResponseEntity<Users> response = restTemplate.postForEntity("/api/v1/users", request, Users.class);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());

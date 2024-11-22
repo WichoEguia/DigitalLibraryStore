@@ -1,0 +1,56 @@
+# Get all books
+GET http://localhost:8080/api/v1/books/all
+Accept: application/json
+
+# Get a book by ID
+GET http://localhost:8080/api/v1/books/{id}
+Accept: application/json
+
+# Create a new book
+POST http://localhost:8080/api/v1/books
+Content-Type: application/json
+
+{
+  "isbn": "978-3-16-148410-0",
+  "title": "The Great Book",
+  "description": "A fascinating tale of adventure.",
+  "imageUrl": "http://example.com/image.jpg",
+  "format": "Hardcover",
+  "publishDate": "2024-01-01",
+  "pagesNo": 350,
+  "popularity": 8.5
+}
+
+# Update a book by ID
+PUT http://localhost:8080/api/v1/books/{id}
+Content-Type: application/json
+
+{
+  "isbn": "978-3-16-148410-0",
+  "title": "The Great Book (Updated)",
+  "description": "An updated version of the fascinating tale.",
+  "imageUrl": "http://example.com/updated-image.jpg",
+  "format": "Paperback",
+  "publishDate": "2024-01-15",
+  "pagesNo": 400,
+  "popularity": 9.0
+}
+
+# Delete a book by ID
+DELETE http://localhost:8080/api/v1/books/{id}
+
+# Search books by title
+GET http://localhost:8080/api/v1/books/searchByTitle?title=The Great Book
+Accept: application/json
+
+# Search books by publish date
+GET http://localhost:8080/api/v1/books/searchByPublishDate?publishDate=2024-01-01
+Accept: application/json
+
+# Get a book by ISBN
+GET http://localhost:8080/api/v1/books/searchByIsbn?isbn=978-3-16-148410-0
+Accept: application/json
+
+# Get popular books
+GET http://localhost:8080/api/v1/books/populares
+Accept: application/json
