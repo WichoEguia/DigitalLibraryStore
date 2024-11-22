@@ -1,6 +1,8 @@
 package com.example.DigitalLibraryStore.utils.exceptions;
 
-public class ResourceNotFoundException extends Exception {
+import jakarta.persistence.EntityNotFoundException;
+
+public class ResourceNotFoundException extends EntityNotFoundException {
     public ResourceNotFoundException() {
         super("${message.exception.default.resource_not_found}");
     }

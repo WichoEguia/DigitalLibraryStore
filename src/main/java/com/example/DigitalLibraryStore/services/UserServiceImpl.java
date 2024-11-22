@@ -3,6 +3,7 @@ package com.example.DigitalLibraryStore.services;
 import com.example.DigitalLibraryStore.entities.User;
 import com.example.DigitalLibraryStore.interfaces.IUserService;
 import com.example.DigitalLibraryStore.repositories.UserDao;
+import com.example.DigitalLibraryStore.utils.exceptions.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IBookService {
-    public List<Book> findAll();
-    public Optional<Book> findById(Long id);
-    public Book save(Book bookDto);
-    public void deleteById(Long id);
-    public List<Book> findByTitle(String title);
-    public List<Book> findByPublishDateAfter(LocalDate publishDate);
-    public Optional<Book> findByIsbn(String isbn);
-    public List<Book> getByPopularity();
+    List<Book> findAll();
+    Optional<Book> findById(Long id);
+    Book save(Book bookDto);
+    void deleteById(Long id);
+    List<Book> findByTitle(String title);
+    List<Book> findByPublishDateAfter(LocalDate publishDate);
+    Optional<Book> findByIsbn(String isbn);
+    List<Book> getByPopularity();
 }

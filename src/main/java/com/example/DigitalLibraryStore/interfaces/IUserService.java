@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IUserService {
-    public List<User> findAll();
-    public Optional<User> findById(Long id);
-    public User save(User user);
-    public void deleteById(Long id);
-    public Optional<List<User>> findByName(String name);
-    public Optional<User> findByEmail(String email);
-    public List<User> findByCreationDate(LocalDateTime createdDate);
+    List<User> findAll();
+    Optional<User> findById(Long id);
+    User save(User user);
+    void deleteById(Long id);
+    Optional<List<User>> findByName(String name);
+    Optional<User> findByEmail(String email);
+    List<User> findByCreationDate(LocalDateTime createdDate);
 }

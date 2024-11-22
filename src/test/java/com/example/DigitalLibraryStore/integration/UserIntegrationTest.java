@@ -1,6 +1,7 @@
 package com.example.DigitalLibraryStore.integration;
 
 import com.example.DigitalLibraryStore.entities.User;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
