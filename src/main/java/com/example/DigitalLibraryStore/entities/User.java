@@ -1,5 +1,6 @@
 package com.example.DigitalLibraryStore.entities;
 
+import com.example.DigitalLibraryStore.dto.UserDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -15,7 +16,7 @@ import java.util.Set;
 @Setter
 @Getter
 @ToString
-public class Users {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,7 +41,7 @@ public class Users {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Loan> loans;
 
-    public Users(String name, String email, String password, boolean enabled) {
+    public User(String name, String email, String password, boolean enabled) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -49,7 +50,7 @@ public class Users {
         this.loans = new HashSet<>();
     }
 
-    public Users(Long id, String name, String email, String password, boolean enabled) {
+    public User(Long id, String name, String email, String password, boolean enabled) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -57,5 +58,13 @@ public class Users {
         this.enabled = enabled;
         this.creationDate = LocalDateTime.now();
         this.loans = new HashSet<>();
+    }
+
+    public User(UserDto userDto) {
+        this.name = userDto.name();
+        this.email = userDto.email();
+        this.password = userDto.password();
+        this.enabled = userDto.enabled();
+        this.creationDate = LocalDateTime.now();
     }
 }

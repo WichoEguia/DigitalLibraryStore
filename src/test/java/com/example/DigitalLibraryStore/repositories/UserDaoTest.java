@@ -1,6 +1,6 @@
 package com.example.DigitalLibraryStore.repositories;
 
-import com.example.DigitalLibraryStore.entities.Users;
+import com.example.DigitalLibraryStore.entities.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-public class UsersDaoTest {
+public class UserDaoTest {
     @Autowired
     private UserDao userDao;
 
@@ -21,24 +21,24 @@ public class UsersDaoTest {
         userDao.deleteAll();
     }
 
-    private Users createUser() {
-        Users users = new Users("John Doe", "john.doe@example.com",
+    private User createUser() {
+        User user = new User("John Doe", "john.doe@example.com",
                 "secure123", true);
-        return userDao.save(users);
+        return userDao.save(user);
     }
 
     @Test
     public void testSaveUser() {
-        Users savedUsers = createUser();
-        assertNotNull(savedUsers);
-        assertEquals("John Doe", savedUsers.getName());
+        User savedUser = createUser();
+        assertNotNull(savedUser);
+        assertEquals("John Doe", savedUser.getName());
     }
 
     @Test
     public void testFindById() {
-        Users savedUsers = createUser();
-        Optional<Users> result = userDao.findById(savedUsers.getId());
-        assertNotNull(savedUsers);
+        User savedUser = createUser();
+        Optional<User> result = userDao.findById(savedUser.getId());
+        assertNotNull(savedUser);
         assertTrue(result.isPresent());
         assertEquals("John Doe", result.get().getName());
     }
@@ -46,7 +46,7 @@ public class UsersDaoTest {
     @Test
     public void testFindByName() {
         createUser();
-        List<Users> result = userDao.findByName("John Doe");
+        List<User> result = userDao.findByName("John Doe");
         assertNotNull(result);
         assertEquals(1, result.size());
     }
@@ -54,7 +54,7 @@ public class UsersDaoTest {
     @Test
     public void testFindByEmail() {
         createUser();
-        Optional<Users> result = userDao.findByEmail("john.doe@example.com");
+        Optional<User> result = userDao.findByEmail("john.doe@example.com");
         assertTrue(result.isPresent());
         assertEquals("John Doe", result.get().getName());
     }

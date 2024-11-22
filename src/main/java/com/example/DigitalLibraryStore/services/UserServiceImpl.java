@@ -1,6 +1,6 @@
 package com.example.DigitalLibraryStore.services;
 
-import com.example.DigitalLibraryStore.entities.Users;
+import com.example.DigitalLibraryStore.entities.User;
 import com.example.DigitalLibraryStore.interfaces.IUserService;
 import com.example.DigitalLibraryStore.repositories.UserDao;
 import jakarta.transaction.Transactional;
@@ -37,7 +37,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Transactional
     @Override
-    public List<Users> findAll() {
+    public List<User> findAll() {
         return userDao.findAll();
     }
 
@@ -49,20 +49,20 @@ public class UserServiceImpl implements IUserService {
      */
     @Transactional
     @Override
-    public Optional<Users> findById(Long id) {
+    public Optional<User> findById(Long id) {
         return userDao.findById(id);
     }
 
     /**
      * Saves a new or updated user to the data source.
      *
-     * @param users The user to save.
+     * @param user The user to save.
      * @return The saved user.
      */
     @Transactional
     @Override
-    public Users save(Users users) {
-        return userDao.save(users);
+    public User save(User user) {
+        return userDao.save(user);
     }
 
     /**
@@ -84,7 +84,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Transactional
     @Override
-    public Optional<List<Users>> findByName(String name) {
+    public Optional<List<User>> findByName(String name) {
         return Optional.ofNullable(userDao.findByName(name));
     }
 
@@ -96,7 +96,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Transactional
     @Override
-    public Optional<Users> findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userDao.findByEmail(email);
     }
 
@@ -108,7 +108,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Transactional
     @Override
-    public List<Users> findByCreationDate(LocalDateTime createdDate) {
+    public List<User> findByCreationDate(LocalDateTime createdDate) {
         return userDao.findByCreationDate(createdDate);
     }
 }

@@ -21,7 +21,7 @@ public class Loan {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Users user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
@@ -33,7 +33,7 @@ public class Loan {
     @Column(nullable = false)
     private LocalDateTime devolutionDate;
 
-    public Loan(Users user, Book book, LocalDateTime devolutionDate) {
+    public Loan(User user, Book book, LocalDateTime devolutionDate) {
         this.user = user;
         this.book = book;
         this.loanDate = LocalDateTime.now();

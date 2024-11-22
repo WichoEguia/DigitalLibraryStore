@@ -1,7 +1,8 @@
 package com.example.DigitalLibraryStore.controllers;
 
+import com.example.DigitalLibraryStore.dto.UserDto;
 import com.example.DigitalLibraryStore.entities.Loan;
-import com.example.DigitalLibraryStore.entities.Users;
+import com.example.DigitalLibraryStore.entities.User;
 import com.example.DigitalLibraryStore.services.LoanServiceImpl;
 import com.example.DigitalLibraryStore.services.UserServiceImpl;
 import jakarta.validation.Valid;
@@ -42,7 +43,7 @@ public class UsersController {
      * @return A list of all users.
      */
     @GetMapping
-    public List<Users> getAllUsers() {
+    public List<User> getAllUsers() {
         return userService.findAll();
     }
 
@@ -53,41 +54,42 @@ public class UsersController {
      * @return The user details if found, or a 404 response if not.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Users> getUserById(@PathVariable Long id) {
-        Optional<Users> user = userService.findById(id);
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        Optional<User> user = userService.findById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     /**
      * Creates a new user.
      *
-     * @param users The user details to create.
+     * @param userDto The user details to create.
      * @return The created user with a 201 status code.
      */
     @PostMapping
-    public ResponseEntity<Users> createUser(@Valid @RequestBody Users users) {
-        Users created = userService.save(users);
+    public ResponseEntity<User> createUser(@Valid @RequestBody UserDto userDto) {
+        User user = new User(userDto);
+        User created = userService.save(user);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     /**
      * Updates an existing user's details.
      *
-     * @param id          The ID of the user to update.
-     * @param usersDetails The updated user details.
+     * @param id         The ID of the user to update.
+     * @param userDto    The updated user details.
      * @return The updated user if found, or a 404 response if not.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Users> updateUser(@PathVariable Long id, @Valid @RequestBody Users usersDetails) {
-        Optional<Users> user = userService.findById(id);
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody UserDto userDto) {
+        Optional<User> user = userService.findById(id);
         if (user.isPresent()) {
-            Users updatedUsers = user.get();
-            updatedUsers.setName(usersDetails.getName());
-            updatedUsers.setEmail(usersDetails.getEmail());
-            updatedUsers.setPassword(usersDetails.getPassword());
-            updatedUsers.setEnabled(usersDetails.isEnabled());
-            userService.save(updatedUsers);
-            return ResponseEntity.ok(updatedUsers);
+            User updatedUser = user.get();
+            updatedUser.setName(userDto.name());
+            updatedUser.setEmail(userDto.email());
+            updatedUser.setPassword(userDto.password());
+            updatedUser.setEnabled(userDto.enabled());
+            userService.save(updatedUser);
+            return ResponseEntity.ok(updatedUser);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -116,8 +118,8 @@ public class UsersController {
      * @return A list of users matching the name, or a 404 response if none are found.
      */
     @GetMapping("/searchByName")
-    public ResponseEntity<List<Users>> findByName(@RequestParam String name) {
-        Optional<List<Users>> users = userService.findByName(name);
+    public ResponseEntity<List<User>> findByName(@RequestParam String name) {
+        Optional<List<User>> users = userService.findByName(name);
         return users.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -128,8 +130,8 @@ public class UsersController {
      * @return The user matching the email, or a 404 response if not found.
      */
     @GetMapping("/searchByEmail")
-    public ResponseEntity<Users> findByEmail(@RequestParam String email) {
-        Optional<Users> user = userService.findByEmail(email);
+    public ResponseEntity<User> findByEmail(@RequestParam String email) {
+        Optional<User> user = userService.findByEmail(email);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -140,8 +142,8 @@ public class UsersController {
      * @return A list of users created on the specified date.
      */
     @GetMapping("/searchByFechaCreacion")
-    public ResponseEntity<List<Users>> findByFechaCreacion(@RequestParam LocalDateTime fechaCreacion) {
-        List<Users> users = userService.findByCreationDate(fechaCreacion);
+    public ResponseEntity<List<User>> findByFechaCreacion(@RequestParam LocalDateTime fechaCreacion) {
+        List<User> users = userService.findByCreationDate(fechaCreacion);
         return ResponseEntity.ok(users);
     }
 

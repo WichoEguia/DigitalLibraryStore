@@ -1,6 +1,6 @@
 package com.example.DigitalLibraryStore.services;
 
-import com.example.DigitalLibraryStore.entities.Users;
+import com.example.DigitalLibraryStore.entities.User;
 import com.example.DigitalLibraryStore.repositories.UserDao;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,7 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class UsersServiceImplTest {
+public class UserServiceImplTest {
 
     @Mock
     private UserDao userDao;
@@ -26,21 +26,21 @@ public class UsersServiceImplTest {
 
     @Test
     public void testFindAll() {
-        List<Users> users = Arrays.asList(
-                new Users(1L, "John Doe", "john.doe@example.com", "secure123", true),
-                new Users(2L, "Jane Doe", "jane.doe@example.com", "secure321", true)
+        List<User> users = Arrays.asList(
+                new User(1L, "John Doe", "john.doe@example.com", "secure123", true),
+                new User(2L, "Jane Doe", "jane.doe@example.com", "secure321", true)
         );
         Mockito.when(userDao.findAll()).thenReturn(users);
-        List<Users> result = userService.findAll();
+        List<User> result = userService.findAll();
         assertNotNull(result);
         assertEquals(2, result.size());
     }
 
     @Test
     public void testFindById() {
-        Users user = new Users(1L, "John Doe", "john.doe@example.com", "secure123", true);
+        User user = new User(1L, "John Doe", "john.doe@example.com", "secure123", true);
         Mockito.when(userDao.findById(1L)).thenReturn(Optional.of(user));
-        Optional<Users> result = userService.findById(1L);
+        Optional<User> result = userService.findById(1L);
         assertTrue(result.isPresent());
         assertEquals("John Doe", result.get().getName());
     }
@@ -48,17 +48,17 @@ public class UsersServiceImplTest {
     @Test
     public void testFindById_NotFound() {
         Mockito.when(userDao.findById(1L)).thenReturn(Optional.empty());
-        Optional<Users> result = userService.findById(1L);
+        Optional<User> result = userService.findById(1L);
         assertFalse(result.isPresent());
     }
 
     @Test
     public void testSaveUser() {
-        Users user = new Users("John Doe", "john.doe@example.com", "secure123", true);
-        Users savedUser = new Users(1L, "John Doe :)", "john.doe@example.com", "secure123", true);
+        User user = new User("John Doe", "john.doe@example.com", "secure123", true);
+        User savedUser = new User(1L, "John Doe :)", "john.doe@example.com", "secure123", true);
         Mockito.when(userDao.save(user)).thenReturn(savedUser);
 
-        Users result = userService.save(user);
+        User result = userService.save(user);
         assertNotNull(result);
         assertEquals(1L, result.getId());
         assertEquals("John Doe :)", result.getName());
@@ -80,11 +80,11 @@ public class UsersServiceImplTest {
 
     @Test
     public void testFindByName() {
-        List<Users> users = Arrays.asList(
-                new Users(1L, "John Doe", "john.doe@example.com", "secure123", true)
+        List<User> users = Arrays.asList(
+                new User(1L, "John Doe", "john.doe@example.com", "secure123", true)
         );
         Mockito.when(userDao.findByName("John Doe")).thenReturn(users);
-        Optional<List<Users>> result = userService.findByName("John Doe");
+        Optional<List<User>> result = userService.findByName("John Doe");
         assertTrue(result.isPresent());
         assertEquals(1, result.get().size());
     }
@@ -92,15 +92,15 @@ public class UsersServiceImplTest {
     @Test
     public void testFindByName_NotFound() {
         Mockito.when(userDao.findByName("Unknown User")).thenReturn(null);
-        Optional<List<Users>> result = userService.findByName("Unknown User");
+        Optional<List<User>> result = userService.findByName("Unknown User");
         assertFalse(result.isPresent());
     }
 
     @Test
     public void testFindByEmail() {
-        Users user = new Users(1L, "John Doe", "john.doe@example.com", "secure123", true);
+        User user = new User(1L, "John Doe", "john.doe@example.com", "secure123", true);
         Mockito.when(userDao.findByEmail("john.doe@example.com")).thenReturn(Optional.of(user));
-        Optional<Users> result = userService.findByEmail("john.doe@example.com");
+        Optional<User> result = userService.findByEmail("john.doe@example.com");
         assertTrue(result.isPresent());
         assertEquals("john.doe@example.com", result.get().getEmail());
     }
@@ -108,20 +108,20 @@ public class UsersServiceImplTest {
     @Test
     public void testFindByEmail_NotFound() {
         Mockito.when(userDao.findByEmail("nonexistent@example.com")).thenReturn(Optional.empty());
-        Optional<Users> result = userService.findByEmail("nonexistent@example.com");
+        Optional<User> result = userService.findByEmail("nonexistent@example.com");
         assertFalse(result.isPresent());
     }
 
     @Test
     public void testFindByCreationDate() {
         LocalDateTime date = LocalDateTime.now();
-        List<Users> users = Arrays.asList(
-                new Users(1L, "John Doe", "john.doe@example.com", "secure123", true)
+        List<User> users = Arrays.asList(
+                new User(1L, "John Doe", "john.doe@example.com", "secure123", true)
         );
         users.get(0).setCreationDate(date);
         Mockito.when(userDao.findByCreationDate(date)).thenReturn(users);
 
-        List<Users> result = userService.findByCreationDate(date);
+        List<User> result = userService.findByCreationDate(date);
         assertNotNull(result);
         assertEquals(1, result.size());
     }
@@ -131,16 +131,16 @@ public class UsersServiceImplTest {
         LocalDateTime date = LocalDateTime.now().minusDays(1);
         Mockito.when(userDao.findByCreationDate(date)).thenReturn(Arrays.asList());
 
-        List<Users> result = userService.findByCreationDate(date);
+        List<User> result = userService.findByCreationDate(date);
         assertTrue(result.isEmpty());
     }
 
     @Test
     public void testUserWithNoLoans() {
-        Users user = new Users(1L, "John NoLoans", "john.noloans@example.com", "password", true);
+        User user = new User(1L, "John NoLoans", "john.noloans@example.com", "password", true);
         Mockito.when(userDao.findById(1L)).thenReturn(Optional.of(user));
 
-        Optional<Users> result = userService.findById(1L);
+        Optional<User> result = userService.findById(1L);
         assertTrue(result.isPresent());
         assertEquals(0, result.get().getLoans().size()); // Ensure no loans are associated with this user
     }
