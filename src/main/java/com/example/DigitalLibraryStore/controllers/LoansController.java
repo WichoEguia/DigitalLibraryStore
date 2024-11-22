@@ -1,7 +1,6 @@
 package com.example.DigitalLibraryStore.controllers;
 
-import com.example.DigitalLibraryStore.entities.Loans;
-import com.example.DigitalLibraryStore.entities.Users;
+import com.example.DigitalLibraryStore.entities.Loan;
 import com.example.DigitalLibraryStore.services.LoanServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,9 +39,9 @@ public class LoansController {
      * @return The created user with a 201 status code.
      */
     @PostMapping
-    public ResponseEntity<Loans> createLoan(@PathVariable Long userId, @PathVariable String isbn,
-                                            @PathVariable LocalDateTime devolutionDate) {
-        Loans loan = loanService.createLoan(userId, isbn, devolutionDate);
+    public ResponseEntity<Loan> createLoan(@PathVariable Long userId, @PathVariable String isbn,
+                                           @PathVariable LocalDateTime devolutionDate) {
+        Loan loan = loanService.createLoan(userId, isbn, devolutionDate);
         return new ResponseEntity<>(loan, HttpStatus.CREATED);
     }
 }

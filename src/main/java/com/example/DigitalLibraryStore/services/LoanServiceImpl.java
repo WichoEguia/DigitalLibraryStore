@@ -1,7 +1,7 @@
 package com.example.DigitalLibraryStore.services;
 
-import com.example.DigitalLibraryStore.entities.Books;
-import com.example.DigitalLibraryStore.entities.Loans;
+import com.example.DigitalLibraryStore.entities.Book;
+import com.example.DigitalLibraryStore.entities.Loan;
 import com.example.DigitalLibraryStore.entities.Users;
 import com.example.DigitalLibraryStore.interfaces.ILoanService;
 import com.example.DigitalLibraryStore.repositories.BookDao;
@@ -47,7 +47,7 @@ public class LoanServiceImpl implements ILoanService {
      */
     @Transactional
     @Override
-    public List<Loans> getLoanByUserId(Long userId) {
+    public List<Loan> getLoanByUserId(Long userId) {
         return loanDao.findByUserId(userId);
     }
 
@@ -60,10 +60,10 @@ public class LoanServiceImpl implements ILoanService {
      */
     @Transactional
     @Override
-    public Loans createLoan(Long userId, String isbn, LocalDateTime devolutionDate) {
+    public Loan createLoan(Long userId, String isbn, LocalDateTime devolutionDate) {
         Users user = userDao.getById(userId);
-        Books book = bookDao.findByIsbn(isbn);
-        Loans loan = new Loans(user, book, devolutionDate);
+        Book book = bookDao.findByIsbn(isbn);
+        Loan loan = new Loan(user, book, devolutionDate);
         return loanDao.save(loan);
     }
 }

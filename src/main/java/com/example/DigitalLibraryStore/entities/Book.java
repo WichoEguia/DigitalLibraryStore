@@ -1,5 +1,6 @@
 package com.example.DigitalLibraryStore.entities;
 
+import com.example.DigitalLibraryStore.dto.BookDto;
 import com.example.DigitalLibraryStore.utils.Format;
 import com.example.DigitalLibraryStore.utils.annotations.MinPages;
 import jakarta.persistence.*;
@@ -17,7 +18,7 @@ import java.util.Set;
 @Setter
 @Getter
 @ToString
-public class Books {
+public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,10 +51,10 @@ public class Books {
     private double popularity;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Loans> loans;
+    private Set<Loan> loans;
 
-    public Books(String isbn, String title, String description, String imageUrl, Format format,
-                 LocalDate publishDate, Integer pagesNo, double popularity) {
+    public Book(String isbn, String title, String description, String imageUrl, Format format,
+                LocalDate publishDate, Integer pagesNo, double popularity) {
         this.isbn = isbn;
         this.title = title;
         this.description = description;
@@ -62,5 +63,16 @@ public class Books {
         this.publishDate = publishDate;
         this.pagesNo = pagesNo;
         this.popularity = popularity;
+    }
+
+    public Book(BookDto bookDto) {
+        this.isbn = bookDto.isbn();
+        this.title = bookDto.title();
+        this.description = bookDto.description();
+        this.imageUrl = bookDto.imageUrl();
+        this.format = bookDto.format();
+        this.publishDate = bookDto.publishDate();
+        this.pagesNo = bookDto.pagesNo();
+        this.popularity = bookDto.popularity();
     }
 }

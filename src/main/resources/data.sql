@@ -1,5 +1,5 @@
--- Insert books
-INSERT INTO books (isbn, title, description, image_url, format, publish_date, pages_no, popularity)
+-- Insert book
+INSERT INTO book (isbn, title, description, image_url, format, publish_date, pages_no, popularity)
 VALUES
 ('978-3-16-148410-0', 'Book One', 'Description of Book One', 'http://example.com/image1.jpg', 'Paperback', '2020-01-15', 250, 7.5),
 ('978-1-23-456789-7', 'Book Two', 'Description of Book Two', 'http://example.com/image2.jpg', 'Hardcover', '2019-05-22', 300, 8.2),

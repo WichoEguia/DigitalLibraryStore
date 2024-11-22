@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Loans {
+public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +25,7 @@ public class Loans {
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
-    private Books book;
+    private Book book;
 
     @Column(nullable = false)
     private LocalDateTime loanDate;
@@ -33,7 +33,7 @@ public class Loans {
     @Column(nullable = false)
     private LocalDateTime devolutionDate;
 
-    public Loans(Users user, Books book, LocalDateTime devolutionDate) {
+    public Loan(Users user, Book book, LocalDateTime devolutionDate) {
         this.user = user;
         this.book = book;
         this.loanDate = LocalDateTime.now();

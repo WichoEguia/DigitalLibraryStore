@@ -1,13 +1,13 @@
-# Get all books
-GET http://localhost:8080/api/v1/books/all
+# Get all book
+GET http://localhost:8080/api/v1/book/all
 Accept: application/json
 
 # Get a book by ID
-GET http://localhost:8080/api/v1/books/{id}
+GET http://localhost:8080/api/v1/book/{id}
 Accept: application/json
 
 # Create a new book
-POST http://localhost:8080/api/v1/books
+POST http://localhost:8080/api/v1/book
 Content-Type: application/json
 
 {
@@ -22,7 +22,7 @@ Content-Type: application/json
 }
 
 # Update a book by ID
-PUT http://localhost:8080/api/v1/books/{id}
+PUT http://localhost:8080/api/v1/book/{id}
 Content-Type: application/json
 
 {
@@ -37,20 +37,20 @@ Content-Type: application/json
 }
 
 # Delete a book by ID
-DELETE http://localhost:8080/api/v1/books/{id}
+DELETE http://localhost:8080/api/v1/book/{id}
 
-# Search books by title
-GET http://localhost:8080/api/v1/books/searchByTitle?title=The Great Book
+# Search book by title
+GET http://localhost:8080/api/v1/book/searchByTitle?title=The Great Book
 Accept: application/json
 
-# Search books by publish date
-GET http://localhost:8080/api/v1/books/searchByPublishDate?publishDate=2024-01-01
+# Search book by publish date
+GET http://localhost:8080/api/v1/book/searchByPublishDate?publishDate=2024-01-01
 Accept: application/json
 
 # Get a book by ISBN
-GET http://localhost:8080/api/v1/books/searchByIsbn?isbn=978-3-16-148410-0
+GET http://localhost:8080/api/v1/book/searchByIsbn?isbn=978-3-16-148410-0
 Accept: application/json
 
-# Get popular books
-GET http://localhost:8080/api/v1/books/populares
+# Get popular book
+GET http://localhost:8080/api/v1/book/populares
 Accept: application/json

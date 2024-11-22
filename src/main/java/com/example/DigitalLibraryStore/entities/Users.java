@@ -38,7 +38,7 @@ public class Users {
     private LocalDateTime creationDate;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Loans> loans;
+    private Set<Loan> loans;
 
     public Users(String name, String email, String password, boolean enabled) {
         this.name = name;

@@ -1,6 +1,6 @@
 package com.example.DigitalLibraryStore.controllers;
 
-import com.example.DigitalLibraryStore.entities.Loans;
+import com.example.DigitalLibraryStore.entities.Loan;
 import com.example.DigitalLibraryStore.entities.Users;
 import com.example.DigitalLibraryStore.services.LoanServiceImpl;
 import com.example.DigitalLibraryStore.services.UserServiceImpl;
@@ -152,8 +152,8 @@ public class UsersController {
      * @return A list of loans for the user.
      */
     @GetMapping("/getLoans/{id}")
-    public ResponseEntity<List<Loans>> getLoans(@PathVariable Long id) {
-        List<Loans> prestamos = loanService.getLoanByUserId(id);
+    public ResponseEntity<List<Loan>> getLoans(@PathVariable Long id) {
+        List<Loan> prestamos = loanService.getLoanByUserId(id);
         return ResponseEntity.ok(prestamos);
     }
 }

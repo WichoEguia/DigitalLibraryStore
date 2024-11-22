@@ -15,4 +15,8 @@ public @interface MinPages {
     int value() default 100;
 
     String message() default "";
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
 }

@@ -6,7 +6,7 @@ This project aims to evaluate a person's technical skills by implementing a libr
 
 ### 1. Key Entities
 - **User**: Represents the registered users in the system. Each user has basic attributes like name, email, password, and a status indicating if the user is active.
-- **Book**: Represents the books available in the library. Each book includes details such as title, author, genre, and availability.
+- **Book**: Represents the book available in the library. Each book includes details such as title, author, genre, and availability.
 - **Loan**: Manages the loans made by users. It includes information about the borrowed book, the user requesting it, the loan date, and the return date.
 
 ### 2. Core Functionalities
@@ -14,8 +14,8 @@ This project aims to evaluate a person's technical skills by implementing a libr
     - Register and edit users.
     - Activate and deactivate user accounts.
 - **Book Management**:
-    - Add new books to the system.
-    - Update information for existing books.
+    - Add new book to the system.
+    - Update information for existing book.
     - Check book availability.
 - **Loan Management**:
     - Register book loans and returns.

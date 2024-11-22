@@ -1,5 +1,5 @@
 -- Create Books table
-CREATE TABLE books (
+CREATE TABLE book (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     isbn VARCHAR(255) NOT NULL UNIQUE,
     title VARCHAR(255) NOT NULL,
@@ -31,19 +31,19 @@ CREATE TABLE loans (
     loan_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     devolution_date TIMESTAMP NOT NULL,
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    CONSTRAINT fk_book FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE
+    CONSTRAINT fk_book FOREIGN KEY (book_id) REFERENCES book(id) ON DELETE CASCADE
 );
 
 -- Add indexes for optimization
 CREATE INDEX idx_users_email ON users(email);
-CREATE INDEX idx_books_isbn ON books(isbn);
+CREATE INDEX idx_books_isbn ON book(isbn);
 CREATE INDEX idx_loans_user_id ON loans(user_id);
 CREATE INDEX idx_loans_book_id ON loans(book_id);
 
--- Enable cascading delete on users and books through foreign keys in loans
+-- Enable cascading delete on users and book through foreign keys in loans
 ALTER TABLE loans
   ADD CONSTRAINT fk_loans_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
 
 ALTER TABLE loans
-  ADD CONSTRAINT fk_loans_book FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE;
+  ADD CONSTRAINT fk_loans_book FOREIGN KEY (book_id) REFERENCES book(id) ON DELETE CASCADE;
 
