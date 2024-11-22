@@ -22,18 +22,18 @@ import java.util.Optional;
 public class UsersController {
 
     private final UserServiceImpl userService;
-    private final LoanServiceImpl prestamoService;
+    private final LoanServiceImpl loanService;
 
     /**
      * Constructor for dependency injection of services.
      *
      * @param userService     The service for managing user records.
-     * @param prestamoService The service for managing loan records.
+     * @param loanService The service for managing loan records.
      */
     @Autowired
-    public UsersController(UserServiceImpl userService, LoanServiceImpl prestamoService) {
+    public UsersController(UserServiceImpl userService, LoanServiceImpl loanService) {
         this.userService = userService;
-        this.prestamoService = prestamoService;
+        this.loanService = loanService;
     }
 
     /**
@@ -153,7 +153,7 @@ public class UsersController {
      */
     @GetMapping("/getLoans/{id}")
     public ResponseEntity<List<Loans>> getLoans(@PathVariable Long id) {
-        List<Loans> prestamos = prestamoService.getLoanByUserId(id);
+        List<Loans> prestamos = loanService.getLoanByUserId(id);
         return ResponseEntity.ok(prestamos);
     }
 }

@@ -23,7 +23,7 @@ The constructor uses **dependency injection** to initialize `UserServiceImpl` an
 
 ```java
 @Autowired
-public UsersController(UserServiceImpl userService, LoanServiceImpl prestamoService) {
+public UsersController(UserServiceImpl userService, LoanServiceImpl loanService) {
     this.userService = userService;
-    this.prestamoService = prestamoService;
+    this.loanService = loanService;
 }
