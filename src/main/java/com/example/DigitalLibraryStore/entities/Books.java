@@ -1,5 +1,6 @@
 package com.example.DigitalLibraryStore.entities;
 
+import com.example.DigitalLibraryStore.utils.Format;
 import com.example.DigitalLibraryStore.utils.annotations.MinPages;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -34,7 +35,7 @@ public class Books {
     private String imageUrl;
 
     @Column
-    private String format;
+    private Format format;
 
     @Column(nullable = false)
     private LocalDate publishDate;
@@ -51,7 +52,7 @@ public class Books {
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Loans> loans;
 
-    public Books(String isbn, String title, String description, String imageUrl, String format,
+    public Books(String isbn, String title, String description, String imageUrl, Format format,
                  LocalDate publishDate, Integer pagesNo, double popularity) {
         this.isbn = isbn;
         this.title = title;
