@@ -1,4 +1,4 @@
-package com.example.DigitalLibraryStore.services;
+package com.example.DigitalLibraryStore.integration;
 
 import com.example.DigitalLibraryStore.entities.User;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.example.DigitalLibraryStore.utils;
+package com.example.DigitalLibraryStore.utils.enums;
 
 public enum Format {
     Paperback,

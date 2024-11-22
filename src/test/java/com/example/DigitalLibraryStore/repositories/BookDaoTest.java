@@ -1,7 +1,7 @@
 package com.example.DigitalLibraryStore.repositories;
 
 import com.example.DigitalLibraryStore.entities.Book;
-import com.example.DigitalLibraryStore.utils.Format;
+import com.example.DigitalLibraryStore.utils.enums.Format;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

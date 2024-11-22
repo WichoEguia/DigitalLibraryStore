@@ -1,6 +1,6 @@
 package com.example.DigitalLibraryStore.dto;
 
-import com.example.DigitalLibraryStore.utils.Format;
+import com.example.DigitalLibraryStore.utils.enums.Format;
 import com.example.DigitalLibraryStore.utils.annotations.MinPages;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

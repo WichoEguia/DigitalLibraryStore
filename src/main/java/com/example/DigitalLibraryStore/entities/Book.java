@@ -1,7 +1,7 @@
 package com.example.DigitalLibraryStore.entities;
 
 import com.example.DigitalLibraryStore.dto.BookDto;
-import com.example.DigitalLibraryStore.utils.Format;
+import com.example.DigitalLibraryStore.utils.enums.Format;
 import com.example.DigitalLibraryStore.utils.annotations.MinPages;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;

@@ -1,10 +1,10 @@
 package com.example.DigitalLibraryStore.controllers;
 
 import com.example.DigitalLibraryStore.dto.UserDto;
-import com.example.DigitalLibraryStore.entities.Loan;
 import com.example.DigitalLibraryStore.entities.User;
-import com.example.DigitalLibraryStore.services.LoanServiceImpl;
 import com.example.DigitalLibraryStore.services.UserServiceImpl;
+import com.example.DigitalLibraryStore.utils.exceptions.ResourceNotFoundException;
+import com.example.DigitalLibraryStore.utils.exceptions.UserNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,18 +23,15 @@ import java.util.Optional;
 public class UsersController {
 
     private final UserServiceImpl userService;
-    private final LoanServiceImpl loanService;
 
     /**
      * Constructor for dependency injection of services.
      *
      * @param userService     The service for managing user records.
-     * @param loanService The service for managing loan records.
      */
     @Autowired
-    public UsersController(UserServiceImpl userService, LoanServiceImpl loanService) {
+    public UsersController(UserServiceImpl userService) {
         this.userService = userService;
-        this.loanService = loanService;
     }
 
     /**
@@ -54,9 +51,10 @@ public class UsersController {
      * @return The user details if found, or a 404 response if not.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable Long id) throws ResourceNotFoundException {
         Optional<User> user = userService.findById(id);
-        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return user.map(ResponseEntity::ok)
+                .orElseThrow(UserNotFoundException::new);
     }
 
     /**
@@ -80,7 +78,8 @@ public class UsersController {
      * @return The updated user if found, or a 404 response if not.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody UserDto userDto)
+            throws ResourceNotFoundException {
         Optional<User> user = userService.findById(id);
         if (user.isPresent()) {
             User updatedUser = user.get();
@@ -91,7 +90,7 @@ public class UsersController {
             userService.save(updatedUser);
             return ResponseEntity.ok(updatedUser);
         } else {
-            return ResponseEntity.notFound().build();
+            throw new UserNotFoundException();
         }
     }
 
@@ -102,12 +101,12 @@ public class UsersController {
      * @return A 204 response if the user was deleted, or a 404 response if not found.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) throws UserNotFoundException {
         if (userService.findById(id).isPresent()) {
             userService.deleteById(id);
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.notFound().build();
+            throw new UserNotFoundException();
         }
     }
 
@@ -118,9 +117,10 @@ public class UsersController {
      * @return A list of users matching the name, or a 404 response if none are found.
      */
     @GetMapping("/searchByName")
-    public ResponseEntity<List<User>> findByName(@RequestParam String name) {
+    public ResponseEntity<List<User>> findByName(@RequestParam String name) throws UserNotFoundException {
         Optional<List<User>> users = userService.findByName(name);
-        return users.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return users.map(ResponseEntity::ok)
+                .orElseThrow(UserNotFoundException::new);
     }
 
     /**
@@ -130,32 +130,21 @@ public class UsersController {
      * @return The user matching the email, or a 404 response if not found.
      */
     @GetMapping("/searchByEmail")
-    public ResponseEntity<User> findByEmail(@RequestParam String email) {
+    public ResponseEntity<User> findByEmail(@RequestParam String email) throws UserNotFoundException {
         Optional<User> user = userService.findByEmail(email);
-        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return user.map(ResponseEntity::ok)
+                .orElseThrow(UserNotFoundException::new);
     }
 
     /**
      * Searches for users created on a specific date.
      *
-     * @param fechaCreacion The creation date to search for.
+     * @param creationDate The creation date to search for.
      * @return A list of users created on the specified date.
      */
-    @GetMapping("/searchByFechaCreacion")
-    public ResponseEntity<List<User>> findByFechaCreacion(@RequestParam LocalDateTime fechaCreacion) {
-        List<User> users = userService.findByCreationDate(fechaCreacion);
+    @GetMapping("/searchByCreationDate")
+    public ResponseEntity<List<User>> findByCreationDate(@RequestParam LocalDateTime creationDate) {
+        List<User> users = userService.findByCreationDate(creationDate);
         return ResponseEntity.ok(users);
-    }
-
-    /**
-     * Retrieves all loans associated with a specific user.
-     *
-     * @param id The ID of the user.
-     * @return A list of loans for the user.
-     */
-    @GetMapping("/getLoans/{id}")
-    public ResponseEntity<List<Loan>> getLoans(@PathVariable Long id) {
-        List<Loan> prestamos = loanService.getLoanByUserId(id);
-        return ResponseEntity.ok(prestamos);
     }
 }

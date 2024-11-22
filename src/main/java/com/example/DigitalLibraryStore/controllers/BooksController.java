@@ -3,6 +3,7 @@ package com.example.DigitalLibraryStore.controllers;
 import com.example.DigitalLibraryStore.dto.BookDto;
 import com.example.DigitalLibraryStore.entities.Book;
 import com.example.DigitalLibraryStore.services.BookServiceImpl;
+import com.example.DigitalLibraryStore.utils.exceptions.BookNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,9 +49,10 @@ public class BooksController {
      * @return The book details if found, or a 404 response if not.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable Long id) {
+    public ResponseEntity<Book> getBookById(@PathVariable Long id) throws BookNotFoundException {
         Optional<Book> book = bookService.findById(id);
-        return book.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return book.map(ResponseEntity::ok)
+                .orElseThrow(BookNotFoundException::new);
     }
 
     /**
@@ -73,7 +75,8 @@ public class BooksController {
      * @return The updated book if found, or a 404 response if not.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable Long id, @Valid @RequestBody BookDto bookDto) {
+    public ResponseEntity<Book> updateBook(@PathVariable Long id, @Valid @RequestBody BookDto bookDto)
+            throws BookNotFoundException {
         Optional<Book> book = bookService.findById(id);
         if (book.isPresent()) {
             Book updatedBook = book.get();
@@ -86,7 +89,7 @@ public class BooksController {
             bookService.save(updatedBook);
             return ResponseEntity.ok(updatedBook);
         } else {
-            return ResponseEntity.notFound().build();
+            throw new BookNotFoundException();
         }
     }
 
@@ -97,12 +100,12 @@ public class BooksController {
      * @return A 204 response if the book was deleted, or a 404 response if not found.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) throws BookNotFoundException {
         if (bookService.findById(id).isPresent()) {
             bookService.deleteById(id);
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.notFound().build();
+            throw new BookNotFoundException();
         }
     }
 
@@ -137,9 +140,10 @@ public class BooksController {
      * @return The book matching the ISBN, or a 404 response if not found.
      */
     @GetMapping("/searchByIsbn")
-    public ResponseEntity<Book> findByIsbn(@RequestParam String isbn) {
+    public ResponseEntity<Book> findByIsbn(@RequestParam String isbn) throws BookNotFoundException {
         Optional<Book> book = bookService.findByIsbn(isbn);
-        return book.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return book.map(ResponseEntity::ok)
+                .orElseThrow(BookNotFoundException::new);
     }
 
     /**

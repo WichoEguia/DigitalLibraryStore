@@ -5,12 +5,10 @@ import com.example.DigitalLibraryStore.services.LoanServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * REST controller for managing loans in the digital library system.
@@ -28,6 +26,18 @@ public class LoansController {
     @Autowired
     public LoansController(LoanServiceImpl loanService) {
         this.loanService = loanService;
+    }
+
+    /**
+     * Retrieves all loans associated with a specific user.
+     *
+     * @param userId The ID of the user.
+     * @return A list of loans for the user.
+     */
+    @GetMapping("/getLoans/{userId}")
+    public ResponseEntity<List<Loan>> getLoans(@PathVariable Long userId) {
+        List<Loan> loans = loanService.getLoanByUserId(userId);
+        return ResponseEntity.ok(loans);
     }
 
     /**
