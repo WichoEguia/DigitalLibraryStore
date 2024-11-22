@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name = "books")
+@Table(name = "${entity.books.table.name}")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -40,15 +40,15 @@ public class Books {
     private LocalDate publishDate;
 
     @Column
-    @MinPages(value = 100)
+    @MinPages(value = 100, message = "${message.books.pagesNo.invalid_pages_number}")
     private Integer pagesNo;
 
     @Column(nullable = false)
-    @Min(value = 0, message = "La popularidad no puede ser menor que 0.")
-    @Max(value = 10, message = "La popularidad no puede ser mayor que 100.")
+    @Min(value = 0, message = "${message.books.popularity.invalid_min}")
+    @Max(value = 10, message = "${message.books.popularity.invalid_min}")
     private double popularity;
 
-    @OneToMany(mappedBy = "books", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Loans> loans;
 
     public Books(String isbn, String title, String description, String imageUrl, String format,

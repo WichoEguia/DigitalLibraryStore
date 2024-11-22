@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "prestamo")
+@Table(name = "${entity.loans.table.name}")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -21,11 +21,11 @@ public class Loans {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Users users;
+    private Users user;
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
-    private Books books;
+    private Books book;
 
     @Column(nullable = false)
     private LocalDateTime loanDate;
@@ -33,9 +33,9 @@ public class Loans {
     @Column(nullable = false)
     private LocalDateTime devolutionDate;
 
-    public Loans(Users users, Books books, LocalDateTime devolutionDate) {
-        this.users = users;
-        this.books = books;
+    public Loans(Users user, Books book, LocalDateTime devolutionDate) {
+        this.user = user;
+        this.book = book;
         this.loanDate = LocalDateTime.now();
         this.devolutionDate = devolutionDate;
     }

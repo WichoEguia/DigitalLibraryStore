@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "${entity.users.table.name}")
 @NoArgsConstructor
 @Setter
 @Getter
@@ -21,11 +21,11 @@ public class Users {
     private Long id;
 
     @Column(nullable = false)
-    @NotBlank
+    @NotBlank(message = "${message.users.name.blank_name}")
     private String name;
 
     @Column(nullable = false)
-    @Email
+    @Email(message = "${message.users.email.invalid_format}")
     private String email;
 
     @Column(nullable = false)
@@ -37,7 +37,7 @@ public class Users {
     @Column(updatable = false)
     private LocalDateTime creationDate;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Loans> loans;
 
     public Users(String name, String email, String password, boolean enabled) {
