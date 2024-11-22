@@ -3,6 +3,7 @@ package com.example.DigitalLibraryStore.services;
 import com.example.DigitalLibraryStore.entities.Users;
 import com.example.DigitalLibraryStore.interfaces.IUserService;
 import com.example.DigitalLibraryStore.repositories.UserDao;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,7 @@ public class UserServiceImpl implements IUserService {
      *
      * @return A list of all users.
      */
+    @Transactional
     @Override
     public List<Users> findAll() {
         return userDao.findAll();
@@ -45,6 +47,7 @@ public class UserServiceImpl implements IUserService {
      * @param id The ID of the user.
      * @return An Optional containing the user if found, or an empty Optional if not found.
      */
+    @Transactional
     @Override
     public Optional<Users> findById(Long id) {
         return userDao.findById(id);
@@ -56,6 +59,7 @@ public class UserServiceImpl implements IUserService {
      * @param users The user to save.
      * @return The saved user.
      */
+    @Transactional
     @Override
     public Users save(Users users) {
         return userDao.save(users);
@@ -66,6 +70,7 @@ public class UserServiceImpl implements IUserService {
      *
      * @param id The ID of the user to delete.
      */
+    @Transactional
     @Override
     public void deleteById(Long id) {
         userDao.deleteById(id);
@@ -77,6 +82,7 @@ public class UserServiceImpl implements IUserService {
      * @param name The name of the users to search for.
      * @return An Optional containing a list of users with the specified name, or an empty Optional if none found.
      */
+    @Transactional
     @Override
     public Optional<List<Users>> findByName(String name) {
         return Optional.ofNullable(userDao.findByName(name));
@@ -88,6 +94,7 @@ public class UserServiceImpl implements IUserService {
      * @param email The email of the user to search for.
      * @return An Optional containing the user if found, or an empty Optional if not found.
      */
+    @Transactional
     @Override
     public Optional<Users> findByEmail(String email) {
         return userDao.findByEmail(email);
@@ -99,6 +106,7 @@ public class UserServiceImpl implements IUserService {
      * @param createdDate The creation date of the users to search for.
      * @return A list of users created on the specified date.
      */
+    @Transactional
     @Override
     public List<Users> findByCreationDate(LocalDateTime createdDate) {
         return userDao.findByCreationDate(createdDate);

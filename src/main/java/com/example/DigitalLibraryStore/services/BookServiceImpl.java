@@ -3,6 +3,7 @@ package com.example.DigitalLibraryStore.services;
 import com.example.DigitalLibraryStore.entities.Books;
 import com.example.DigitalLibraryStore.interfaces.IBookService;
 import com.example.DigitalLibraryStore.repositories.BookDao;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -38,6 +39,7 @@ public class BookServiceImpl implements IBookService {
      *
      * @return A list of all books.
      */
+    @Transactional
     @Override
     public List<Books> findAll() {
         return bookDao.findAll();
@@ -49,6 +51,7 @@ public class BookServiceImpl implements IBookService {
      * @param id The ID of the book.
      * @return An Optional containing the book if found, or an empty Optional if not found.
      */
+    @Transactional
     @Override
     public Optional<Books> findById(Long id) {
         return bookDao.findById(id);
@@ -60,6 +63,7 @@ public class BookServiceImpl implements IBookService {
      * @param books The book to save.
      * @return The saved book.
      */
+    @Transactional
     @Override
     public Books save(@Valid Books books) {
         return bookDao.save(books);
@@ -70,6 +74,7 @@ public class BookServiceImpl implements IBookService {
      *
      * @param id The ID of the book to delete.
      */
+    @Transactional
     @Override
     public void deleteById(Long id) {
         bookDao.deleteById(id);
@@ -81,6 +86,7 @@ public class BookServiceImpl implements IBookService {
      * @param title The title of the books to search for.
      * @return A list of books with the specified title.
      */
+    @Transactional
     @Override
     public List<Books> findByTitle(String title) {
         return bookDao.findByTitle(title);
@@ -92,6 +98,7 @@ public class BookServiceImpl implements IBookService {
      * @param publishDate The publish date to filter the books by.
      * @return A list of books published after the specified date.
      */
+    @Transactional
     @Override
     public List<Books> findByPublishDateAfter(LocalDate publishDate) {
         return bookDao.findByPublishDate(publishDate);
@@ -103,6 +110,7 @@ public class BookServiceImpl implements IBookService {
      * @param isbn The ISBN of the book to search for.
      * @return An Optional containing the book if found, or an empty Optional if not found.
      */
+    @Transactional
     @Override
     public Optional<Books> findByIsbn(String isbn) {
         return Optional.ofNullable(bookDao.findByIsbn(isbn));
@@ -113,6 +121,7 @@ public class BookServiceImpl implements IBookService {
      *
      * @return A list of books ordered by popularity.
      */
+    @Transactional
     @Override
     public List<Books> getByPopularity() {
         return bookDao.findAll(Sort.by(Sort.Direction.DESC, "popularidad"));
